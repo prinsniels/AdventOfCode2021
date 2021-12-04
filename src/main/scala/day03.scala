@@ -1,5 +1,4 @@
 object day3 extends App:
-
   def addBitString(acc: Array[Int], input: String): Array[Int] =
     acc.zip(input.toCharArray.map(_.toString.toInt)).map(_ + _)
 
