@@ -12,7 +12,7 @@ object day04 extends App:
       Card(raw.map(_.toSet) ++ raw.transpose.map(_.toSet)) :: cards
     }
 
-  def isWinner(inputs: Set[Int], card: Card): Boolean =
+  def hasBingo(inputs: Set[Int], card: Card): Boolean =
     card.rows.find(_.subsetOf(inputs)) match
       case None    => false
       case Some(_) => true
@@ -20,34 +20,20 @@ object day04 extends App:
   def cardScore(card: Card, taken: Set[Int], last: Int) =
     (card.rows.foldLeft(Set.empty[Int])(_ ++ _) -- taken).sum * last
 
-  def findWinner(
-      remain: List[Int],
-      cards: List[Card],
-      taken: Set[Int]
-  ): Option[(Card, Set[Int], Int)] =
+  def playCard(remain: List[Int], card: Card, taken: Set[Int]): Option[(Set[Int], Int)] =
     remain match
-      case hd :: tail => {
-        cards.find(c => isWinner(taken + hd, c)) match
-          case Some(card) => Some((card, taken + hd, hd))
-          case None       => findWinner(tail, cards, taken + hd)
-      }
+      case hd :: tail => 
+          if (hasBingo(taken + hd, card)) Some(taken + hd, hd)
+          else playCard(tail, card, taken + hd)
       case Nil => None
-
-  def worstPlay(inputs: List[Int], cards: List[Card]): (Card, Set[Int], Int) =
-    cards
-      .map(card => findWinner(input, List(card), Set.empty[Int]))
-      .collect { case Some(r) => r._2.size -> r }
-      .maxBy(_._1)
-      ._2
 
   val src = "day4".live
   val input = src.next.split(',').map(_.toInt).toList
-
   val cards = getCards(src)
 
-  findWinner(input, cards, Set.empty[Int]).fold(println("nothing Found")) {
-    case (card, taken, last) => println(cardScore(card, taken, last))
-  }
+  val turnsAndScore = cards
+  .map(card => playCard(input, card, Set.empty[Int]).map( (used, last) => used.size -> cardScore(card, used, last)))
+  .collect({case Some(turns -> score) => turns -> score})
 
-  val (card, taken, last) = worstPlay(input, cards)
-  println(cardScore(card, taken, last))
+  println(s"best ${turnsAndScore.minBy(_._1)._2}")
+  println(s"worst ${turnsAndScore.maxBy(_._1)._2}")
