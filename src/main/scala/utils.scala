@@ -9,3 +9,8 @@ extension (fn: String)
   def tst = Source
     .fromFile(File(s"src/main/resources/test/${fn}.txt"))
     .getLines
+
+    
+extension [A](ia: List[A])
+  def frequency: Map[A, Int] =
+    ia.foldLeft(Map.empty[A, Int])((acc, a) => acc + (a -> (acc.getOrElse(a, 0) + 1)))
