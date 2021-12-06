@@ -11,7 +11,7 @@ object day06 extends App:
     if (turns == 0) state
     else process(transformation(state), turns - 1, transformation)
 
-  def ex1transform(origin: State): State =
+  def transform(origin: State): State =
     origin
       .map {
         case (0, v) => List(8 -> v, 6 -> v).toMap
@@ -19,5 +19,5 @@ object day06 extends App:
       }
       .reduce((l, r) => l ++ r.map((k, v) => k -> (l.getOrElse(k, 0L) + v)))
 
-  println(process(startState, 80, ex1transform).map((_, v) => v).sum)
-  println(process(startState, 256, ex1transform).map((_, v) => v).sum)
+  println(process(startState, 80, transform).map((_, v) => v).sum)
+  println(process(startState, 256, transform).map((_, v) => v).sum)
