@@ -15,15 +15,12 @@ object day05 extends App:
       else helper( cur + delta, delta, cur :: acc)
     helper(p1, Point(deltaValue(p1.x, p2.x), deltaValue(p1.y, p2.y)), List.empty[Point])
 
-  def merge[A](m1: Map[A, Int], m2: Map[A, Int]): Map[A, Int] =
-    (m1 ++ m2.map((k, v) => k -> (m1.getOrElse(k, 0) + v)))
-
   println(
     "day5".live
       .map(parse)
       .filter((l, r) => l.x == r.x || l.y == r.y)
       .map((x, y) => toPoints(x, y).map(_ -> 1).toMap)
-      .reduce(merge)
+      .reduce(Utils.mapSumInt)
       .filter((p, i) => i >= 2)
       .size
   )
@@ -31,7 +28,7 @@ object day05 extends App:
     "day5".tst
       .map(parse)
       .map((x, y) => toPoints(x, y).map(_ -> 1).toMap)
-      .reduce(merge)
+      .reduce(Utils.mapSumInt)
       .filter((p, i) => i >= 2)
       .size
   )

@@ -17,7 +17,7 @@ object day06 extends App:
         case (0, v) => List(8 -> v, 6 -> v).toMap
         case (k, v) => List(k - 1 -> v).toMap
       }
-      .reduce((l, r) => l ++ r.map((k, v) => k -> (l.getOrElse(k, 0L) + v)))
+      .reduce(Utils.mapSumLong)
 
   println(process(startState, 80, transform).map((_, v) => v).sum)
   println(process(startState, 256, transform).map((_, v) => v).sum)

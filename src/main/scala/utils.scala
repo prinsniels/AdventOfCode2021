@@ -14,3 +14,11 @@ extension (fn: String)
 extension [A](ia: List[A])
   def frequency: Map[A, Int] =
     ia.foldLeft(Map.empty[A, Int])((acc, a) => acc + (a -> (acc.getOrElse(a, 0) + 1)))
+
+
+object Utils:    
+  def mapSumInt[A](l: Map[A, Int], r: Map[A, Int]): Map[A, Int] =
+    l ++ r.map((k, v) => k -> (l.getOrElse(k, 0) + v))
+
+  def mapSumLong[A](l: Map[A, Long], r: Map[A, Long]): Map[A, Long] =
+    l ++ r.map((k, v) => k -> (l.getOrElse(k, 0L) + v))
