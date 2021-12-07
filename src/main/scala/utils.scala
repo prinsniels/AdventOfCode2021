@@ -11,10 +11,17 @@ extension (fn: String)
     .getLines
 
     
-extension [A](ia: List[A])
+extension [A](ia: Iterable[A])
   def frequency: Map[A, Int] =
     ia.foldLeft(Map.empty[A, Int])((acc, a) => acc + (a -> (acc.getOrElse(a, 0) + 1)))
 
+
+extension [A](a: A)
+  def andThenShow: Unit = 
+    println(a)
+
+  def andThenShowWith(w: String): Unit = 
+    println(s"${w}:${a}")
 
 object Utils:    
   def mapSumInt[A](l: Map[A, Int], r: Map[A, Int]): Map[A, Int] =
