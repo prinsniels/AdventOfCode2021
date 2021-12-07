@@ -35,5 +35,5 @@ object day04 extends App:
   .map(card => playCard(input, card, Set.empty[Int]).map( (used, last) => used.size -> cardScore(card, used, last)))
   .collect({case Some(turns -> score) => turns -> score})
 
-  println(s"best ${turnsAndScore.minBy(_._1)._2}")
-  println(s"worst ${turnsAndScore.maxBy(_._1)._2}")
+  turnsAndScore.minBy(_._1)._2 andThenShowWith "ex1 best"
+  turnsAndScore.maxBy(_._1)._2 andThenShowWith "ex2 worst"

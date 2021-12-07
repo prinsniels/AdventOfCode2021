@@ -18,7 +18,7 @@ object day3 extends App:
   val mostCommon = mostCommonBitPositions("day3".live.toList)
   val leastCommon = leastCommonBitPositions("day3".live.toList)
 
-  println(Integer.parseInt(mostCommon, 2) * Integer.parseInt(leastCommon, 2))
+  Integer.parseInt(mostCommon, 2) * Integer.parseInt(leastCommon, 2) andThenShowWith "ex1"
 
   def O(events: List[String], f: List[String] => String): Int =
     def search(remainder: List[String], pos: Int): Int =
@@ -27,4 +27,4 @@ object day3 extends App:
         search(remainder.filter(_.charAt(pos) == f(remainder).charAt(pos)), pos + 1)}
     search(events, 0)
 
-  println(O("day3".live.toList, mostCommonBitPositions) * O("day3".live.toList, leastCommonBitPositions))
+  O("day3".live.toList, mostCommonBitPositions) * O("day3".live.toList, leastCommonBitPositions) andThenShowWith "ex2"

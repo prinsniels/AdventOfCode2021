@@ -29,16 +29,12 @@ object Day2 extends App:
       case Forward(v) =>
         s.copy(horizon = s.horizon + v, depth = s.depth + s.aim * v)
 
-  println(
-    "day2".live
-      .map(parse)
-      .foldLeft(Vec2(0, 0))(move)
-      .multiple
-  )
+  "day2".live
+    .map(parse)
+    .foldLeft(Vec2(0, 0))(move)
+    .multiple andThenShowWith "ex1"
 
-  println(
-    "day2".live
-      .map(parse)
-      .foldLeft(Vec3(0, 0, 0))(move)
-      .multiple
-  )
+  "day2".live
+    .map(parse)
+    .foldLeft(Vec3(0, 0, 0))(move)
+    .multiple andThenShowWith "ex2"

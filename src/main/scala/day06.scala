@@ -19,5 +19,5 @@ object day06 extends App:
       }
       .reduce(Utils.mapSumLong)
 
-  println(process(startState, 80, transform).map((_, v) => v).sum)
-  println(process(startState, 256, transform).map((_, v) => v).sum)
+  process(startState, 80, transform).map((_, v) => v).sum andThenShowWith "ex1"
+  process(startState, 256, transform).map((_, v) => v).sum andThenShowWith "ex2"

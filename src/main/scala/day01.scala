@@ -4,12 +4,8 @@ object Day1 extends App:
     .map(_.toInt)
     .toList
 
-  val ex1 = lines.zip(lines.tail).count(_ < _)
-
-  println(ex1)
+  lines.zip(lines.tail).count(_ < _) andThenShowWith "ex1"
 
   val sliding = lines.sliding(3).map(_.sum).toList
 
-  val ex2 = sliding.zip(sliding.tail).count(_ < _)
-
-  println(ex2)
+  sliding.zip(sliding.tail).count(_ < _) andThenShowWith "ex2"
