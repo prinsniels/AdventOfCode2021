@@ -12,32 +12,36 @@ object day08 extends App:
     case split(l, r) => Line(collection(l), collection(r))
 
   def inputToDigits(input: Vector[Set[Char]]): Map[Set[Char], Int] =
-    lazy val zero =
-      input.filter(_.size == 3).head -- input.filter(_.size == 2).head
-    lazy val one = (input.filter(_.size == 6) ++ input.filter(_.size == 4))
-      .reduce(_.intersect(_)) -- input.filter(_.size == 2).head
-    lazy val two = input.filter(_.size == 2).head -- five
-    lazy val three = (input.filter(_.size == 5) ++ input.filter(_.size == 4))
-      .reduce(_.intersect(_))
-    lazy val four =
-      "abcdefg".toSet -- zero -- one -- two -- three -- five -- six
-    lazy val five = (input.filter(_.size == 6) ++ input.filter(_.size == 2))
-      .reduce(_.intersect(_))
-    lazy val six =
-      input.filter(_.size == 5).reduce(_.intersect(_)) -- zero -- three
-
-    Map(
-      (zero | one | two | four | five | six) -> 0,
-      (two | five) -> 1,
-      (zero | two | three | four | six) -> 2,
-      (zero | two | three | five | six) -> 3,
-      (one | two | three | five) -> 4,
-      (zero | one | three | five | six) -> 5,
-      (zero | one | three | four | five | six) -> 6,
-      (zero | two | five) -> 7,
-      (zero | one | two | three | four | five | six) -> 8,
-      (zero | one | two | three | five | six) -> 9
-    )
+    input.map { i =>
+      i match {
+        case i if i.size == 2 => i -> 1
+        case i if i.size == 3 => i -> 7
+        case i if i.size == 4 => i -> 4
+        case i
+            if i.size == 5 & i
+              .intersect(input.find(_.size == 2).get)
+              .size == 2 =>
+          i -> 3
+        case i
+            if i.size == 5 & i
+              .intersect(input.find(_.size == 4).get)
+              .size == 2 =>
+          i -> 2
+        case i if i.size == 5 => i -> 5
+        case i
+            if i.size == 6 & i
+              .intersect(input.find(_.size == 2).get)
+              .size == 1 =>
+          i -> 6
+        case i
+            if i.size == 6 & i
+              .intersect(input.find(_.size == 4).get)
+              .size == 4 =>
+          i -> 9
+        case i if i.size == 6 => i -> 0
+        case _                => i -> 8
+      }
+    }.toMap
 
   "day8".live
     .map(parse)
@@ -49,7 +53,7 @@ object day08 extends App:
   "day8".live
     .map(parse)
     .map(line => {
-        val digitMap = inputToDigits(line.input)
-        line.output.map(digitMap).mkString.toInt
+      val digitMap = inputToDigits(line.input)
+      line.output.map(digitMap).mkString.toInt
     })
     .sum andThenShowWith "ex2"
