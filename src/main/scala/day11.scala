@@ -24,15 +24,10 @@ object day11 extends App:
                 nw -> (nw.count((_, v) => v == 0) + flashes)
      }
 
-  def firstAll(f: Board[Int]): Int =
-    def helper(f: Board[Int], c: Int, pred: Board[Int] => Boolean): Int = 
-        val nw = transform(f)
-        if (pred(nw)) c
-        else helper(nw, c + 1,  pred)
-    helper(f, 0, (x: Board[Int]) => x.count((_, v) => v > 0) == 0) + 1
+  lazy val iterationsUnit: (Board[Int], Int) => Int = (board, steps) => 
+      if (board.count((_, v) => v > 0) == 0) steps
+      else iterationsUnit(transform(board), steps + 1)
 
   transformFor(field, 100)._2 andThenShowWith "ex1"
 
-  firstAll(field) andThenShowWith "ex2" 
-
-
+  iterationsUnit(field, 0) andThenShowWith "ex2"
