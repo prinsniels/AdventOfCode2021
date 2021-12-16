@@ -4,7 +4,6 @@ object day14 extends App:
     line match
       case s"${a} -> ${b}" => a -> b
 
-  val insert: Map[String, String] = insertionsRaw.drop(1).map(x => parseInsertion(x)).toList.toMap
 
   def expand(pair: String, table: Map[String, String]): List[String] =
     val insertion = table.getOrElse(pair, "-")
@@ -16,6 +15,7 @@ object day14 extends App:
 
   val (baseRaw, insertionsRaw) = "day14".live.splitAt(1)
   val startString = baseRaw.toList.head
+  val insert: Map[String, String] = insertionsRaw.drop(1).map(x => parseInsertion(x)).toList.toMap
 
   val initial = startString.sliding(2, 1).toList.frequency.map((k, v) => k -> v.toLong)
 
