@@ -7,7 +7,7 @@ object day20 extends App:
             for {
                 y <- (v.y - 1 to v.y + 1)
                 x <- (v.x - 1 to v.x + 1)
-                i = if (board.getOrElse(Vec(x, y), d)  == ".") "0" else "1"
+                i = if (board.getOrElse(Vec(x, y), d) == ".") "0" else "1"
             } yield i
             }.mkString
 
@@ -29,15 +29,6 @@ object day20 extends App:
         img ++ aboveAndBelow ++ leftAndRight 
     
     
-    def removePadding(img: Board[String]): Board[String] = 
-        val minX: Int = img.keys.minBy(k => k.x).x
-        val minY: Int = img.keys.minBy(k => k.y).y
-        val maxX: Int = img.keys.maxBy(k => k.x).x
-        val maxY: Int = img.keys.maxBy(k => k.y).y
-        
-        img.filter( (k, _) => k.x >= 0 & k.y >= 0).filter( (k, _) => k.y <= (maxY + minY) & k.x <= (maxX + minX))
-
-
     def enhance(alg: Map[Int, String], iimg: Board[String], default: String): Board[String] =  
         iimg.keys.map(k => k -> bin(iimg, default)(k)).map( (k, v) => k -> alg.getOrElse(v.binInt, default)).toMap
 
