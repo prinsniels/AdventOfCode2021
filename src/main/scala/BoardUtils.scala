@@ -18,9 +18,9 @@ object BoardUtils:
     def showMapHighlightByKey(pred: Vec => Boolean): Board[A] =
       import io.AnsiColor._
 
-      (0 to board.keys.map(_.y).max)
+      (board.keys.map(_.y).min to board.keys.map(_.y).max)
         .map(y =>
-          (0 to board.keys.map(_.x).max)
+          (board.keys.map(_.x).min to board.keys.map(_.x).max)
             .map(x => {
               if (pred(Vec(x, y))) RED_B + board.getOrElse(Vec(x, y), ' ').toString + RESET
               else board.getOrElse(Vec(x, y), ' ').toString
