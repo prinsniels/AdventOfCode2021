@@ -17,11 +17,13 @@ extension [A](ia: Iterable[A])
 
 
 extension [A](a: A)
-  def andThenShow: Unit = 
+  def andThenShow: A = 
     println(a)
+    a
 
-  def andThenShowWith(w: String): Unit = 
-    println(s"${w}:${a}")
+  def andThenShowWith(w: String): A = 
+    println(s"${w}:${a}") 
+    a
 
 object Utils:    
   def mapSumInt[A](l: Map[A, Int], r: Map[A, Int]): Map[A, Int] =
